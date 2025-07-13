@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Controle de Estoque</title>
+  <link rel="stylesheet" href="../public/css/style.css" />
+</head>
+
+<body>
+  <h1>📦 Controle de Estoque</h1>
+
+  <section>
+    <h2>➕ Adicionar Produto</h2>
+    <input type="text" id="nome" placeholder="Nome do Produto" />
+    <input type="number" id="quantidade" placeholder="Quantidade" />
+    <input type="text" id="categoria" placeholder="Categoria (opcional)" />
+    <button id="btn-adicionar">Adicionar</button>
+  </section>
+
+  <section>
+    <h2>📤 Retirar Produto</h2>
+    <input type="text" id="nome-retirada" placeholder="Nome do produto" />
+    <input type="number" id="quantidade-retirada" placeholder="Quantidade a retirar" />
+    <button id="btn-retirar">Retirar</button>
+  </section>
+
+  <hr>
+
+  <section>
+    <h2>📋 Produtos em Estoque</h2>
+    <ul id="lista-produtos"></ul>
+  </section>
+
+  <section>
+    <h2>📜 Histórico de Movimentações</h2>
+    <ul id="lista-historico"></ul>
+  </section>
+
+  <script src="../public/js/renderer.js"></script>
+</body>
+
+</html>

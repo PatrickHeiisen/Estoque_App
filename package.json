@@ -1,0 +1,27 @@
+{
+  "name": "estoque_app",
+  "version": "1.0.0",
+  "description": "Estoque de produtos",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PatrickHeiisen/Estoque_App.git"
+  },
+  "author": "Patrick H",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/PatrickHeiisen/Estoque_App/issues"
+  },
+  "homepage": "https://github.com/PatrickHeiisen/Estoque_App#readme",
+  "devDependencies": {
+    "electron": "^37.2.1"
+  },
+  "dependencies": {
+    "mongodb": "^6.17.0",
+    "sqlite3": "^5.1.7"
+  }
+}

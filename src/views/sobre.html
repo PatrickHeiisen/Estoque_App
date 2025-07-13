@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estoque</title>
+    <style>
+        /* Resetando o estilo */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Corpo da página */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+
+        /* Título */
+        h1 {
+            color: #2e8b57;
+            margin-bottom: 20px;
+        }
+
+        /* Estilo do container de informações */
+        .info-container {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            width: 300px;
+            text-align: center;
+        }
+
+        /* Títulos dentro do info-container */
+        .info-container h2 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        /* Estilo dos textos e versão */
+        .info-container p {
+            margin: 10px 0;
+            font-size: 14px;
+        }
+
+        .info-container .version {
+            font-weight: bold;
+            color: #2e8b57;
+        }
+
+        /* Estilo dos botões */
+        .btn {
+            background-color: #2e8b57;
+            color: #fff;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #246c46;
+        }
+    </style>
+</head>
+<body>
+    <h1>Gerenciador de Estoque</h1>
+
+    <div class="info-container">
+        <h2>Sobre o App</h2>
+        <p>Desenvolvedor: <strong>Patrick H</strong></p>
+        <p class="version">Versão: 1.0.0</p>
+        <p>Este é um sistema simples para gerenciar o estoque de produtos, com funcionalidades básicas para controle de entradas e saídas de itens.</p>
+        
+        <button class="btn" onclick="alert('Agradecemos pelo uso do nosso aplicativo!')">Mais informações</button>
+    </div>
+</body>
+</html>
