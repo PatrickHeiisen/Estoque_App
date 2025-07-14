@@ -23,22 +23,24 @@ const db = new sqlite3.Database(dbPath, (err) => {
 // Cria a tabela de produtos
 db.run(`
     CREATE TABLE IF NOT EXISTS produtos (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        nome TEXT NOT NULL,
-        quantidade INTEGER NOT NULL,
-        categoria TEXT,
-        data_entrada TEXT NOT NULL
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    nome TEXT NOT NULL,
+    quantidade INTEGER NOT NULL,
+    unidade TEXT DEFAULT 'Unid',
+    categoria TEXT,
+    data_entrada TEXT NOT NULL
     );
 `);
 
 // Cria a tabela de movimentações
 db.run(`
-    CREATE TABLE IF NOT EXISTS movimentacoes (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        produto_nome TEXT NOT NULL,
-        tipo TEXT NOT NULL, -- 'entrada' ou 'saida'
-        quantidade INTEGER NOT NULL,
-        data TEXT NOT NULL
+    CREATE TABLE IF NOT EXISTS produtos (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    nome TEXT NOT NULL,
+    quantidade INTEGER NOT NULL,
+    categoria TEXT,
+    unidade TEXT DEFAULT 'Unid',
+    data_entrada TEXT NOT NULL
     );
 `);
 

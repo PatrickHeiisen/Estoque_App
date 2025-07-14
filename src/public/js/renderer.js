@@ -5,6 +5,30 @@ const path = require('path');
 const dbPath = path.join(__dirname, '..', 'banco', 'estoque.db');
 const db = new sqlite3.Database(dbPath);
 
+// 🔧 Garante que as tabelas existam
+db.serialize(() => {
+  db.run(`
+    CREATE TABLE IF NOT EXISTS produtos (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      nome TEXT NOT NULL,
+      quantidade INTEGER NOT NULL,
+      unidade TEXT DEFAULT 'Unid',
+      categoria TEXT,
+      data_entrada TEXT NOT NULL
+    );
+  `);
+
+  db.run(`
+    CREATE TABLE IF NOT EXISTS movimentacoes (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      produto_nome TEXT NOT NULL,
+      tipo TEXT NOT NULL, -- 'entrada' ou 'saida'
+      quantidade INTEGER NOT NULL,
+      data TEXT NOT NULL
+    );
+  `);
+});
+
 // Estado de edição
 let editando = false;
 let idEditando = null;
@@ -12,6 +36,7 @@ let idEditando = null;
 // Elementos da interface
 const nomeInput = document.getElementById('nome');
 const quantidadeInput = document.getElementById('quantidade');
+const unidadeInput = document.getElementById('unidade');
 const categoriaInput = document.getElementById('categoria');
 const btnAdicionar = document.getElementById('btn-adicionar');
 const listaProdutos = document.getElementById('lista-produtos');
@@ -24,6 +49,7 @@ const btnRetirar = document.getElementById('btn-retirar');
 btnAdicionar.addEventListener('click', () => {
   const nome = nomeInput.value.trim();
   const quantidade = parseInt(quantidadeInput.value);
+  const unidade = unidadeInput.value;
   const categoria = categoriaInput.value.trim();
   const data_entrada = new Date().toISOString().split('T')[0];
 
@@ -34,8 +60,8 @@ btnAdicionar.addEventListener('click', () => {
 
   if (editando && idEditando !== null) {
     db.run(
-      `UPDATE produtos SET nome = ?, quantidade = ?, categoria = ? WHERE id = ?`,
-      [nome, quantidade, categoria, idEditando],
+      `UPDATE produtos SET nome = ?, quantidade = ?, unidade = ?, categoria = ? WHERE id = ?`,
+      [nome, quantidade, unidade, categoria, idEditando],
       (err) => {
         if (err) {
           console.error('Erro ao editar produto:', err.message);
@@ -47,9 +73,9 @@ btnAdicionar.addEventListener('click', () => {
     );
   } else {
     db.run(
-      `INSERT INTO produtos (nome, quantidade, categoria, data_entrada)
-       VALUES (?, ?, ?, ?)`,
-      [nome, quantidade, categoria, data_entrada],
+      `INSERT INTO produtos (nome, quantidade, unidade, categoria, data_entrada)
+       VALUES (?, ?, ?, ?, ?)`,
+      [nome, quantidade, unidade, categoria, data_entrada],
       (err) => {
         if (err) {
           console.error('Erro ao inserir produto:', err.message);
@@ -120,7 +146,7 @@ function carregarProdutos() {
     rows.forEach((produto) => {
       const li = document.createElement('li');
       li.innerHTML = `
-        <strong>${produto.nome}</strong> - ${produto.quantidade} un. [${produto.categoria || 'Sem categoria'}]
+        <strong>${produto.nome}</strong> - ${produto.quantidade} ${produto.unidade || 'Unid'} [${produto.categoria || 'Sem categoria'}]
         <button class="btn-editar" data-id="${produto.id}">Editar</button>
         <button class="btn-excluir" data-id="${produto.id}">Excluir</button>
       `;
@@ -164,6 +190,7 @@ function editarProduto(id) {
     } else if (produto) {
       nomeInput.value = produto.nome;
       quantidadeInput.value = produto.quantidade;
+      unidadeInput.value = produto.unidade || 'Unid';
       categoriaInput.value = produto.categoria || '';
 
       editando = true;
@@ -177,6 +204,7 @@ function editarProduto(id) {
 function resetarFormulario() {
   nomeInput.value = '';
   quantidadeInput.value = '';
+  unidadeInput.value = 'Unid';
   categoriaInput.value = '';
   btnAdicionar.textContent = 'Adicionar';
   editando = false;

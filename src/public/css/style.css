@@ -6,6 +6,7 @@ body {
 
 h1 {
   color: #333;
+  text-align: center;
 }
 
 section {
@@ -15,12 +16,30 @@ section {
 input {
   margin: 5px;
   padding: 5px;
-  width: 200px;
+  width: 170px;
 }
 
 button {
   padding: 6px 12px;
   cursor: pointer;
+}
+
+select#unidade {
+  padding: 6px 12px;
+  width: 100px;
+  /* pra ficar no mesmo tamanho dos inputs */
+  font-size: 14px;
+  border: 1px solid #a3a0a0;
+  border-radius: 4px;
+  background-color: #fff;
+  appearance: none;
+  /* remove a seta padrão no Chrome */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20fill%3D'%23666'%20height%3D'24'%20viewBox%3D'0%200%2024%2024'%20width%3D'24'%20xmlns%3D'http%3A//www.w3.org/2000/svg'%3E%3Cpath%20d%3D'M7%2010l5%205%205-5z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 16px 16px;
 }
 
 #lista-produtos {
@@ -35,7 +54,8 @@ button {
   border: 1px solid #ccc;
 }
 
-button.btn-editar, button.btn-excluir {
+button.btn-editar,
+button.btn-excluir {
   margin-left: 10px;
   padding: 4px 8px;
   font-size: 12px;
