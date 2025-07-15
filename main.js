@@ -1,6 +1,6 @@
-const { app, BrowserWindow, nativeTheme, Menu, shell } = require('electron/main')
-const path = require('node:path')
-require('./src/banco/database'); // inicia o banco
+const { app, BrowserWindow, nativeTheme, Menu, shell, ipcMain } = require('electron/main')
+const path = require('path')
+const db = require('./db/database.js');
 
 // Janela Principal
 const createWindow = () => {
@@ -9,13 +9,14 @@ const createWindow = () => {
         width: 900,
         height: 720,
         webPreferences: {
-            nodeIntegration: true,
-            contextIsolation: false
+            preload: path.join(__dirname, 'src/preload.js'),
+            nodeIntegration: false,
+            contextIsolation: true
         }
     })
 
     Menu.setApplicationMenu(Menu.buildFromTemplate(templete))
-    win.loadFile('./src/views/index.html')
+    win.loadFile('./src/index.html')
 }
 
 // Janela Sobre
@@ -28,11 +29,11 @@ const aboutWindow = () => {
         resizable: false,
         minimizable: false,
         webPreferences: {
-            preload: path.join(__dirname, 'preload.js')
+            preload: path.join(__dirname, 'src/preload.js')
         }
     })
 
-    win.loadFile('./src/views/sobre.html')
+    win.loadFile('./src/sobre.html')
 }
 
 app.whenReady().then(() => {
@@ -99,3 +100,48 @@ const templete = [
         ]
     }
 ]
+
+// IPCs para Produto
+ipcMain.handle('produto:adicionar', async (event, produto) => {
+    return new Promise((resolve, reject) => {
+        db.adicionarProduto(produto, (err) => {
+            if (err) reject(err);
+            else {
+                const msg = `➕ Adicionado ${produto.quantidade} ${produto.unidade}(s) de ${produto.nome}`;
+                db.adicionarHistorico(msg, () => { });
+                resolve();
+            }
+        });
+    });
+});
+
+ipcMain.handle('produto:retirar', async (event, nome, quantidade) => {
+    return new Promise((resolve, reject) => {
+        db.retirarProduto(nome, quantidade, (err) => {
+            if (err) reject(err);
+            else {
+                const msg = `📤 Retirado ${quantidade} de ${nome}`;
+                db.adicionarHistorico(msg, () => { });
+                resolve();
+            }
+        });
+    });
+});
+
+ipcMain.handle('produto:listar', async () => {
+    return new Promise((resolve, reject) => {
+        db.listarProdutos((err, rows) => {
+            if (err) reject(err);
+            else resolve(rows);
+        });
+    });
+});
+
+ipcMain.handle('historico:listar', async () => {
+    return new Promise((resolve, reject) => {
+        db.listarHistorico((err, rows) => {
+            if (err) reject(err);
+            else resolve(rows);
+        });
+    });
+});

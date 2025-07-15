@@ -1,0 +1,11 @@
+Ferramentas para instalação:
+
+npm install electron --save-dev electron
+npm install sqlite3
+
+Bugs Arrumar:
+
+alerta de quantidade
+não deixar retirar quantidade a mais do estoque
+Ter botao de excluir
+no retirado mostrar se e unid, kg, caixa 
