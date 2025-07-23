@@ -1,6 +1,6 @@
 const { app, BrowserWindow, nativeTheme, Menu, shell, ipcMain } = require('electron/main')
 const path = require('path')
-const db = require('./db/database.js');
+const db = require('./db/database.js')
 
 // Janela Principal
 const createWindow = () => {
@@ -107,41 +107,41 @@ ipcMain.handle('produto:adicionar', async (event, produto) => {
         db.adicionarProduto(produto, (err) => {
             if (err) reject(err);
             else {
-                const msg = `➕ Adicionado ${produto.quantidade} ${produto.unidade}(s) de ${produto.nome}`;
-                db.adicionarHistorico(msg, () => { });
-                resolve();
+                const msg = `➕ Adicionado ${produto.quantidade} ${produto.unidade}(s) de ${produto.nome}`
+                db.adicionarHistorico(msg, () => { })
+                resolve()
             }
-        });
-    });
-});
+        })
+    })
+})
 
 ipcMain.handle('produto:retirar', async (event, nome, quantidade) => {
     return new Promise((resolve, reject) => {
         db.retirarProduto(nome, quantidade, (err) => {
-            if (err) reject(err);
+            if (err) reject(err)
             else {
-                const msg = `📤 Retirado ${quantidade} de ${nome}`;
-                db.adicionarHistorico(msg, () => { });
-                resolve();
+                const msg = `📤 Retirado ${quantidade} de ${nome}`
+                db.adicionarHistorico(msg, () => { })
+                resolve()
             }
-        });
-    });
-});
+        })
+    })
+})
 
 ipcMain.handle('produto:listar', async () => {
     return new Promise((resolve, reject) => {
         db.listarProdutos((err, rows) => {
-            if (err) reject(err);
-            else resolve(rows);
-        });
-    });
-});
+            if (err) reject(err)
+            else resolve(rows)
+        })
+    })
+})
 
 ipcMain.handle('historico:listar', async () => {
     return new Promise((resolve, reject) => {
         db.listarHistorico((err, rows) => {
-            if (err) reject(err);
-            else resolve(rows);
-        });
-    });
-});
+            if (err) reject(err)
+            else resolve(rows)
+        })
+    })
+})

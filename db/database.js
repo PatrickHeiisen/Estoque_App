@@ -1,8 +1,11 @@
+const { app } = require('electron')
 const sqlite3 = require('sqlite3').verbose()
 const path = require('path')
 
-// Caminho do arquivo do banco
-const dbPath = path.resolve(__dirname, 'estoque.db')
+// Garante que a função só será chamada quando o Electron estiver pronto
+const userDataPath = app.getPath('userData')
+const dbPath = path.join(userDataPath, 'estoque.db')
+
 const db = new sqlite3.Database(dbPath)
 
 // Criação das tabelas
